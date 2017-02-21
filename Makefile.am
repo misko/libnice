@@ -17,7 +17,6 @@ SUBDIRS = \
 	agent \
 	nice \
 	gst \
-	docs \
 	tests \
 	examples
 

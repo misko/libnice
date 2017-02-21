@@ -6,13 +6,13 @@ dnl also use -Werror. git and pre-releases default to -Werror
 
 dnl use a three digit version number for releases, and four for cvs/prerelease
 AC_INIT([libnice],[0.1.13.1])
-LIBNICE_RELEASE="no"
+LIBNICE_RELEASE="yes"
 
 AC_CANONICAL_TARGET
 
 AC_CONFIG_SRCDIR([agent/agent.c])
 AC_CONFIG_HEADERS([config.h])
-AM_INIT_AUTOMAKE([1.12 -Wall -Wno-portability subdir-objects])
+AM_INIT_AUTOMAKE([1.11 -Wall -Wno-portability subdir-objects])
 
 AC_CONFIG_FILES([
 	Makefile
@@ -25,9 +25,6 @@ AC_CONFIG_FILES([
 	nice/nice.pc
 	random/Makefile
 	gst/Makefile
-	docs/Makefile
-	docs/reference/Makefile
-	docs/reference/libnice/Makefile
 	tests/Makefile
 	examples/Makefile
 	])
@@ -54,7 +51,7 @@ AM_SILENT_RULES([yes])
 
 AC_USE_SYSTEM_EXTENSIONS
 AC_PROG_CC
-AM_PROG_AR
+m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
 LT_PREREQ([2.2.6])
 LT_INIT([dlopen win32-dll disable-static])
 
@@ -93,9 +90,9 @@ AC_CHECK_HEADERS([ifaddrs.h], \
 AC_CHECK_TYPES([size_t, ssize_t])
 
 # Also put matching version in LIBNICE_CFLAGS
-GLIB_REQ=2.44
+GLIB_REQ=2.42
 
-LIBNICE_CFLAGS="-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_44 -DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_44"
+LIBNICE_CFLAGS="-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_42 -DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_42"
 
 dnl Support different levels of compiler error reporting.
 dnl This configure flag is designed to mimic one from gnome-common,
@@ -340,11 +337,11 @@ case $host_os in
 esac
 
 # check for gtk-doc
-m4_ifdef([GTK_DOC_CHECK], [
-GTK_DOC_CHECK([1.9],[--flavour no-tmpl])
-],[
-AM_CONDITIONAL([ENABLE_GTK_DOC], false)
-])
+#m4_ifdef([GTK_DOC_CHECK], [
+#GTK_DOC_CHECK([1.9],[--flavour no-tmpl])
+#],[
+#AM_CONDITIONAL([ENABLE_GTK_DOC], false)
+#])
 
 # GObject introspection
 GOBJECT_INTROSPECTION_CHECK([1.30.0])

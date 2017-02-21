@@ -205,8 +205,7 @@ socket_recv_messages (NiceSocket *sock,
     if (recvd < 0) {
       /* Handle ECONNRESET here as if it were EWOULDBLOCK; see
        * https://phabricator.freedesktop.org/T121 */
-      if (g_error_matches (gerr, G_IO_ERROR, G_IO_ERROR_WOULD_BLOCK) ||
-          g_error_matches (gerr, G_IO_ERROR, G_IO_ERROR_CONNECTION_CLOSED))
+      if (g_error_matches (gerr, G_IO_ERROR, G_IO_ERROR_WOULD_BLOCK) )
         recvd = 0;
       else
         error = TRUE;
